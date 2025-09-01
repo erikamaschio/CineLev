@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineLev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d;
+            color: #f3f4f6;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b46c1;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 min-h-screen flex items-center justify-center p-4">
+
+    <!-- Tela de Login -->
+    <div id="login-screen" class="w-full max-w-sm bg-gray-900 rounded-2xl shadow-xl p-8 transform transition-transform duration-500 ease-in-out scale-100">
+        <h2 class="text-4xl font-extrabold text-center text-white mb-6">CineLev</h2>
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-400">Nome de Usuário</label>
+                <input type="text" id="username" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite seu nome" required>
+            </div>
+            <div class="relative">
+                <label for="password" class="block text-sm font-medium text-gray-400">Senha</label>
+                <input type="password" id="password" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite sua senha" required>
+                <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 top-6 px-3 flex items-center text-gray-400 hover:text-white focus:outline-none">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path id="show-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path id="hide-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" class="hidden" />
+                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+            <button type="submit" class="w-full flex justify-center py-2 px-4 rounded-lg text-white font-semibold transition-transform transform hover:scale-105" style="background-image: linear-gradient(to right, #6b46c1, #805ad5);">
+                    Entrar
+            </button>
+        </form>
+    </div>
+
+    <!-- Tela Principal de Recomendações de Filmes (inicialmente oculta) -->
+    <div id="main-screen" class="hidden w-full h-full max-w-7xl p-4 md:p-8">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8">
+            <h1 class="text-5xl font-extrabold text-white mb-4 md:mb-0">CineLev</h1>
+            <div class="flex items-center space-x-4 w-full md:w-auto">
+                <div class="relative w-full md:w-64">
+                    <!-- Ícone de Lupa SVG -->
+                    <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Buscar por título ou gênero" class="w-full py-2 pl-10 pr-4 bg-gray-800 border-2 border-gray-700 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors">
+                </div>
+                <button id="add-movie-button" class="py-2 px-6 rounded-full bg-green-600 text-sm font-medium text-white hover:bg-green-700 transition-colors">
+                    Adicionar Filme
+                </button>
+                <button id="logout-button" class="py-2 px-6 rounded-full bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600 transition-colors">
+                    Sair
+                </button>
+            </div>
+        </header>
+
+        <!-- Filtros de Gênero -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            <button class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-700 text-gray-300 hover:bg-purple-600 hover:text-white transition-colors">Todos</button>
+            <button class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white transition-colors">Ação</button>
+            <button class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white transition-colors">Ficção Científica</button>
+            <button class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white transition-colors">Fantasia</button>
+            <button class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white transition-colors">Drama</button>
+            <button class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white transition-colors">Terror</button>
+        </div>
+
+        <!-- Container para os filmes -->
+        <div id="movie-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Filmes serão injetados aqui pelo JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Filme -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-2xl font-bold text-white mb-4">Adicionar Novo Filme</h3>
+            <form id="movie-form" class="space-y-4">
+                <div>
+                    <label for="movie-title" class="block text-sm font-medium text-gray-400">Título</label>
+                    <input type="text" id="movie-title" class="mt-1 block w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                </div>
+                <div>
+                    <label for="movie-genre" class="block text-sm font-medium text-gray-400">Gênero</label>
+                    <input type="text" id="movie-genre" class="mt-1 block w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                </div>
+                <div>
+                    <label for="movie-rating" class="block text-sm font-medium text-gray-400">Classificação</label>
+                    <input type="number" id="movie-rating" class="mt-1 block w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" step="0.1" min="0" max="5" required>
+                </div>
+                <div>
+                    <label for="movie-description" class="block text-sm font-medium text-gray-400">Descrição</label>
+                    <textarea id="movie-description" class="mt-1 block w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" rows="3" required></textarea>
+                </div>
+                <div>
+                    <label for="movie-image" class="block text-sm font-medium text-gray-400">URL da Imagem</label>
+                    <input type="url" id="movie-image" class="mt-1 block w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                </div>
+                <div class="flex justify-end space-x-4 mt-6">
+                    <button type="button" id="cancel-modal-button" class="py-2 px-6 rounded-lg bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600 transition-colors">Cancelar</button>
+                    <button type="submit" id="save-movie-button" class="py-2 px-6 rounded-lg text-white font-semibold transition-transform transform hover:scale-105" style="background-image: linear-gradient(to right, #6b46c1, #805ad5);">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Dados de filmes de exemplo
+        const movies = [
+            { id: 1, title: "Duna", genre: "Ficção Científica", rating: 4.5, description: "A jornada de um herói em um planeta desértico para garantir o futuro de seu povo.", image: "https://br.web.img3.acsta.net/c_310_420/pictures/21/09/29/20/10/5897145.jpg" },
+            { id: 2, title: "Parasita", genre: "Drama", rating: 4.8, description: "Uma família pobre se infiltra na casa de uma família rica, desencadeando uma série de eventos inesperados.", image: "https://m.media-amazon.com/images/S/pv-target-images/e64deabace60f9e45c2eb2f52212c82d54cd7f370687076229fea69baf71cdc3.jpg" },
+            { id: 3, title: "O Cavaleiro das Trevas", genre: "Ação", rating: 4.7, description: "Batman enfrenta o Coringa em uma batalha caótica pela alma de Gotham City.", image: "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d1/The_Dark_Knight.jpg/250px-The_Dark_Knight.jpg" },
+            { id: 4, title: "O Senhor dos Anéis: O Retorno do Rei", genre: "Fantasia", rating: 4.9, description: "A batalha final pela Terra Média contra as forças de Sauron.", image: "https://upload.wikimedia.org/wikipedia/pt/thumb/0/0d/EsdlaIII.jpg/250px-EsdlaIII.jpg" },
+            { id: 5, title: "Matrix", genre: "Ficção Científica", rating: 4.6, description: "Um programador de computador descobre que a realidade que ele conhece é uma simulação de computador.", image: "https://br.web.img2.acsta.net/medias/nmedia/18/91/08/82/20128877.JPG" },
+            { id: 6, title: "Vingadores: Ultimato", genre: "Ação", rating: 4.4, description: "Os heróis restantes se reúnem para reverter o estalar de dedos de Thanos.", image: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/9b/Avengers_Endgame.jpg/250px-Avengers_Endgame.jpg" },
+            { id: 7, title: "Interestelar", genre: "Ficção Científica", rating: 4.8, description: "Exploradores viajam por um buraco de minhoca para encontrar um novo lar para a humanidade.", image: "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png" },
+            { id: 8, title: "A Origem", genre: "Ação", rating: 4.7, description: "Um ladrão que rouba segredos corporativos por meio de tecnologia de compartilhamento de sonhos.", image: "https://upload.wikimedia.org/wikipedia/pt/8/84/AOrigemPoster.jpg" },
+        ];
+
+        // Referências aos elementos do DOM
+        const loginScreen = document.getElementById('login-screen');
+        const mainScreen = document.getElementById('main-screen');
+        const loginForm = document.getElementById('login-form');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordButton = document.getElementById('toggle-password');
+        const searchInput = document.getElementById('search-input');
+        const movieListContainer = document.getElementById('movie-list');
+        const logoutButton = document.getElementById('logout-button');
+        const addMovieButton = document.getElementById('add-movie-button');
+        const movieModal = document.getElementById('movie-modal');
+        const movieForm = document.getElementById('movie-form');
+        const modalTitle = document.getElementById('modal-title');
+        const saveMovieButton = document.getElementById('save-movie-button');
+        const cancelModalButton = document.getElementById('cancel-modal-button');
+        const genreFilterButtons = document.querySelectorAll('.genre-filter-btn');
+
+        // Função para criar a carta do filme
+        function createMovieCard(movie) {
+            const card = document.createElement('div');
+            card.className = 'bg-gray-900 rounded-xl shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 relative group';
+            card.setAttribute('data-id', movie.id);
+            card.innerHTML = `
+                <img src="${movie.image}" alt="Capa do filme ${movie.title}" class="w-full h-80 object-cover rounded-t-xl">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-xl font-bold text-white">${movie.title}</h3>
+                        <span class="bg-gray-700 text-yellow-300 text-sm font-semibold px-2 py-1 rounded-full">${movie.rating}★</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">${movie.genre}</p>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">${movie.description}</p>
+                    <div class="flex space-x-2">
+                        <button class="edit-btn w-full py-2 rounded-lg text-white font-semibold transition-transform transform hover:scale-105" style="background-image: linear-gradient(to right, #6b46c1, #805ad5);">Editar</button>
+                        <button class="delete-btn w-full py-2 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 bg-red-600 hover:bg-red-700">Excluir</button>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        // Função para renderizar os filmes
+        function renderMovies(moviesToRender) {
+            movieListContainer.innerHTML = '';
+            if (moviesToRender.length === 0) {
+                movieListContainer.innerHTML = '<p class="text-center text-gray-500">Nenhum filme encontrado.</p>';
+            } else {
+                moviesToRender.forEach(movie => {
+                    const movieCard = createMovieCard(movie);
+                    movieListContainer.appendChild(movieCard);
+                });
+            }
+        }
+
+        // Evento de envio do formulário de login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Apenas para demonstração, o login sempre será "bem-sucedido"
+            loginScreen.classList.add('hidden');
+            mainScreen.classList.remove('hidden');
+            renderMovies(movies);
+        });
+
+        // Evento para mostrar/esconder a senha
+        togglePasswordButton.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            // Toggle do ícone
+            document.getElementById('show-icon').classList.toggle('hidden');
+            document.getElementById('hide-icon').classList.toggle('hidden');
+        });
+
+        // Evento de busca/filtro
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredMovies = movies.filter(movie =>
+                movie.title.toLowerCase().includes(searchTerm) ||
+                movie.genre.toLowerCase().includes(searchTerm)
+            );
+            renderMovies(filteredMovies);
+        });
+
+        // Evento dos botões de gênero
+        genreFilterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const genre = e.target.textContent;
+                genreFilterButtons.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
+                e.target.classList.add('bg-purple-600', 'text-white');
+
+                if (genre === 'Todos') {
+                    renderMovies(movies);
+                } else {
+                    const filteredMovies = movies.filter(movie => movie.genre === genre);
+                    renderMovies(filteredMovies);
+                }
+            });
+        });
+
+        // Evento do botão de sair
+        logoutButton.addEventListener('click', () => {
+            mainScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+            searchInput.value = '';
+            usernameInput.value = '';
+            passwordInput.value = '';
+            genreFilterButtons.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
+            genreFilterButtons[0].classList.add('bg-purple-600', 'text-white');
+        });
+
+        // Evento do botão "Adicionar Filme"
+        addMovieButton.addEventListener('click', () => {
+            modalTitle.textContent = 'Adicionar Novo Filme';
+            saveMovieButton.textContent = 'Adicionar';
+            movieForm.reset();
+            movieModal.style.display = 'flex';
+            setTimeout(() => movieModal.classList.add('active'), 10);
+        });
+
+        // Evento para o botão de "Editar"
+        movieListContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('edit-btn')) {
+                const card = e.target.closest('div[data-id]');
+                const movieId = parseInt(card.getAttribute('data-id'));
+                const movieToEdit = movies.find(movie => movie.id === movieId);
+
+                if (movieToEdit) {
+                    modalTitle.textContent = 'Editar Filme';
+                    saveMovieButton.textContent = 'Salvar Alterações';
+                    document.getElementById('movie-title').value = movieToEdit.title;
+                    document.getElementById('movie-genre').value = movieToEdit.genre;
+                    document.getElementById('movie-rating').value = movieToEdit.rating;
+                    document.getElementById('movie-description').value = movieToEdit.description;
+                    document.getElementById('movie-image').value = movieToEdit.image;
+                    movieModal.style.display = 'flex';
+                    setTimeout(() => movieModal.classList.add('active'), 10);
+                }
+            }
+        });
+
+        // Evento para o botão de "Excluir"
+        movieListContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-btn')) {
+                const card = e.target.closest('div[data-id]');
+                if (card) {
+                    // Apenas para demonstração, remove o card visualmente
+                    card.style.display = 'none';
+                }
+            }
+        });
+
+        // Evento para fechar o modal
+        cancelModalButton.addEventListener('click', () => {
+            movieModal.classList.remove('active');
+            setTimeout(() => movieModal.style.display = 'none', 300);
+        });
+
+        // Evento de envio do formulário do modal (apenas para demonstração)
+        movieForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Apenas para demonstração, o modal é fechado após o envio
+            movieModal.classList.remove('active');
+            setTimeout(() => movieModal.style.display = 'none', 300);
+        });
+
+    </script>
+</body>
+</html>
