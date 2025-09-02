@@ -63,16 +63,16 @@
         <h2 class="text-4xl font-extrabold text-center text-white mb-6">CineLev</h2>
         <form id="login-form" class="space-y-6">
             <div>
-                <label for="username" class="block text-sm font-medium text-gray-400">Nome de Usuário</label>
-                <input type="text" id="username" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite seu nome" required>
+                <label for="username-login" class="block text-sm font-medium text-gray-400">Nome de Usuário</label>
+                <input type="text" id="username-login" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite seu nome" required>
             </div>
             <div class="relative">
-                <label for="password" class="block text-sm font-medium text-gray-400">Senha</label>
-                <input type="password" id="password" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite sua senha" required>
-                <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 top-6 px-3 flex items-center text-gray-400 hover:text-white focus:outline-none">
+                <label for="password-login" class="block text-sm font-medium text-gray-400">Senha</label>
+                <input type="password" id="password-login" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite sua senha" required>
+                <button type="button" id="toggle-password-login" class="absolute inset-y-0 right-0 top-6 px-3 flex items-center text-gray-400 hover:text-white focus:outline-none">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path id="show-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path id="hide-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" class="hidden" />
+                        <path id="show-icon-login" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path id="hide-icon-login" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" class="hidden" />
                         <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                 </button>
@@ -80,6 +80,37 @@
             <button type="submit" class="w-full flex justify-center py-2 px-4 rounded-lg text-white font-semibold transition-transform transform hover:scale-105" style="background-image: linear-gradient(to right, #6b46c1, #805ad5);">
                     Entrar
             </button>
+            <p class="text-center text-gray-400 text-sm mt-4">Não tem uma conta? <a href="#" id="show-register-button" class="text-purple-400 hover:underline">Criar Conta</a></p>
+        </form>
+    </div>
+
+    <!-- Tela de Cadastro (inicialmente oculta) -->
+    <div id="register-screen" class="hidden w-full max-w-sm bg-gray-900 rounded-2xl shadow-xl p-8 transform transition-transform duration-500 ease-in-out scale-100">
+        <h2 class="text-4xl font-extrabold text-center text-white mb-6">Criar sua Conta</h2>
+        <form id="register-form" class="space-y-6">
+            <div>
+                <label for="username-register" class="block text-sm font-medium text-gray-400">Nome de Usuário</label>
+                <input type="text" id="username-register" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite seu nome" required>
+            </div>
+            <div>
+                <label for="email-register" class="block text-sm font-medium text-gray-400">Email</label>
+                <input type="email" id="email-register" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite seu email" required>
+            </div>
+            <div class="relative">
+                <label for="password-register" class="block text-sm font-medium text-gray-400">Senha</label>
+                <input type="password" id="password-register" class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Digite sua senha" required>
+                <button type="button" id="toggle-password-register" class="absolute inset-y-0 right-0 top-6 px-3 flex items-center text-gray-400 hover:text-white focus:outline-none">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path id="show-icon-register" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path id="hide-icon-register" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" class="hidden" />
+                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+            <button type="submit" class="w-full flex justify-center py-2 px-4 rounded-lg text-white font-semibold transition-transform transform hover:scale-105" style="background-image: linear-gradient(to right, #6b46c1, #805ad5);">
+                Cadastrar
+            </button>
+            <p class="text-center text-gray-400 text-sm mt-4">Já tem uma conta? <a href="#" id="show-login-button" class="text-purple-400 hover:underline">Fazer Login</a></p>
         </form>
     </div>
 
@@ -95,7 +126,7 @@
                     </svg>
                     <input type="text" id="search-input" placeholder="Buscar por título ou gênero" class="w-full py-2 pl-10 pr-4 bg-gray-800 border-2 border-gray-700 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors">
                 </div>
-                <button id="add-movie-button" class="py-2 px-6 rounded-full bg-green-600 text-sm font-medium text-white hover:bg-green-700 transition-colors">
+                <button id="add-movie-button" class="py-2 px-6 rounded-full bg-purple-600 text-sm font-medium text-white hover:bg-purple-700 transition-colors">
                     Adicionar Filme
                 </button>
                 <button id="logout-button" class="py-2 px-6 rounded-full bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600 transition-colors">
@@ -168,11 +199,23 @@
 
         // Referências aos elementos do DOM
         const loginScreen = document.getElementById('login-screen');
+        const registerScreen = document.getElementById('register-screen');
         const mainScreen = document.getElementById('main-screen');
+
         const loginForm = document.getElementById('login-form');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const togglePasswordButton = document.getElementById('toggle-password');
+        const registerForm = document.getElementById('register-form');
+
+        const usernameLoginInput = document.getElementById('username-login');
+        const passwordLoginInput = document.getElementById('password-login');
+        const togglePasswordLoginButton = document.getElementById('toggle-password-login');
+        const showRegisterButton = document.getElementById('show-register-button');
+
+        const usernameRegisterInput = document.getElementById('username-register');
+        const emailRegisterInput = document.getElementById('email-register');
+        const passwordRegisterInput = document.getElementById('password-register');
+        const togglePasswordRegisterButton = document.getElementById('toggle-password-register');
+        const showLoginButton = document.getElementById('show-login-button');
+
         const searchInput = document.getElementById('search-input');
         const movieListContainer = document.getElementById('movie-list');
         const logoutButton = document.getElementById('logout-button');
@@ -229,13 +272,48 @@
             renderMovies(movies);
         });
 
-        // Evento para mostrar/esconder a senha
-        togglePasswordButton.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            // Toggle do ícone
-            document.getElementById('show-icon').classList.toggle('hidden');
-            document.getElementById('hide-icon').classList.toggle('hidden');
+        // Evento de envio do formulário de cadastro
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Apenas para demonstração, o cadastro sempre será "bem-sucedido"
+            registerScreen.classList.add('hidden');
+            mainScreen.classList.remove('hidden');
+            renderMovies(movies);
+        });
+
+        // Evento para mostrar/esconder a senha na tela de login
+        togglePasswordLoginButton.addEventListener('click', () => {
+            const type = passwordLoginInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordLoginInput.setAttribute('type', type);
+            document.getElementById('show-icon-login').classList.toggle('hidden');
+            document.getElementById('hide-icon-login').classList.toggle('hidden');
+        });
+
+        // Evento para mostrar/esconder a senha na tela de cadastro
+        togglePasswordRegisterButton.addEventListener('click', () => {
+            const type = passwordRegisterInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordRegisterInput.setAttribute('type', type);
+            document.getElementById('show-icon-register').classList.toggle('hidden');
+            document.getElementById('hide-icon-register').classList.toggle('hidden');
+        });
+
+        // Evento para alternar para a tela de cadastro
+        showRegisterButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginScreen.classList.add('hidden');
+            registerScreen.classList.remove('hidden');
+            usernameRegisterInput.value = '';
+            emailRegisterInput.value = '';
+            passwordRegisterInput.value = '';
+        });
+
+        // Evento para alternar para a tela de login
+        showLoginButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+            usernameLoginInput.value = '';
+            passwordLoginInput.value = '';
         });
 
         // Evento de busca/filtro
@@ -269,8 +347,8 @@
             mainScreen.classList.add('hidden');
             loginScreen.classList.remove('hidden');
             searchInput.value = '';
-            usernameInput.value = '';
-            passwordInput.value = '';
+            usernameLoginInput.value = '';
+            passwordLoginInput.value = '';
             genreFilterButtons.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
             genreFilterButtons[0].classList.add('bg-purple-600', 'text-white');
         });
@@ -329,7 +407,6 @@
             movieModal.classList.remove('active');
             setTimeout(() => movieModal.style.display = 'none', 300);
         });
-
     </script>
 </body>
 </html>
