@@ -135,9 +135,7 @@
     </div>
 
     <script>
-        // Adiciona um evento de clique ao botão "Sair" 
         document.getElementById('logout-button').addEventListener('click', function() {
-            // Redireciona o navegador para a rota que tem o nome 'login'
             window.location.href = "{{ route('login') }}";
         });
     </script>

@@ -13,7 +13,6 @@ class MovieController extends Controller
 {
     protected $repository;
 
-    // Injeção de dependência do Repository
     public function __construct(MovieRepository $movieRepository)
     {
         $this->repository = $movieRepository;
@@ -38,13 +37,13 @@ class MovieController extends Controller
         // Pega os dados validados do formulário
         $validatedData = $request->validated();
 
-        // Pegando o valor da chave 'imdb' (minúscula) que veio da validação.
+        // Pegao valor da chave 'imdb' (minúscula) que veio da validação.
         $validatedData['IMDB'] = $validatedData['imdb'];
 
-        // Removendo a chave antiga em minúsculas para evitar qualquer confusão
+        // Remove a chave antiga em minúsculas para evitar qualquer confusão
         unset($validatedData['imdb']);
 
-        // Enviando os dados com a chave correta para o repositório
+        // Envia os dados com a chave correta para o repositório
         $this->repository->register($validatedData);
 
         // Redireciona para a lista de filmes com uma mensagem de sucesso
@@ -82,16 +81,15 @@ class MovieController extends Controller
         return redirect()->route('main')->with('success', 'Filme excluído com sucesso!');
     }
 
-    // Em app/Http/Controllers/MovieController.php
 
     public function filter(Request $request)
     {
         $movies = $this->repository->filter($request->all());
-        $genres = Movie::select('genre')->distinct()->orderBy('genre')->get(); // <-- Adicionar
+        $genres = Movie::select('genre')->distinct()->orderBy('genre')->get(); 
         return view('main', [
             'movies' => $movies,
             'filters' => $request->all(),
-            'genres' => $genres // <-- Modificar
+            'genres' => $genres 
         ]);
     }
 }
