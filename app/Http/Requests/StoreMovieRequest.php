@@ -7,7 +7,7 @@ class StoreMovieRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // Permite que todos os usuários façam esta requisição
+        return true; 
     }
 
     public function rules(): array
