@@ -61,8 +61,8 @@
                         class="mt-1 block w-full px-4 py-2 bg-gray-800 rounded-lg text-white" required>
                         <option value="">Selecione um gênero</option>
                         @foreach ($genres as $genre)
-                            <option value="{{ $genre->genre }}"
-                                {{ old('genre', $movie->genre) == $genre->genre ? 'selected' : '' }}>{{ $genre->genre }}
+                            <option value="{{ $genre }}"
+                                {{ old('genre', $movie->genre) == $genre ? 'selected' : '' }}>{{ $genre }}
                             </option>
                         @endforeach
                     </select>

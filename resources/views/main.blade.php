@@ -54,10 +54,10 @@
 
         <div class="flex flex-wrap gap-2 mb-8 items-center">
             <span class="text-gray-400 text-sm mr-2">Filtrar por gênero:</span>
-            @if (isset($genres) && $genres->count() > 0)
+            @if (isset($genres) && count($genres) > 0)
                 @foreach ($genres as $genre)
-                    <button type="submit" name="search" value="{{ $genre->genre }}"
-                        class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white">{{ $genre->genre }}</button>
+                    <button type="submit" name="search" value="{{ $genre }}"
+                        class="genre-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-800 text-gray-300 hover:bg-purple-600 hover:text-white">{{ $genre }}</button>
                 @endforeach
             @endif
             <a href="{{ route('main') }}"

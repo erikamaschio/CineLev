@@ -13,6 +13,8 @@ class MovieController extends Controller
 {
     protected $repository;
 
+    private $genres = ['Ação', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Fantasia', 'Suspense'];
+
     public function __construct(MovieRepository $movieRepository)
     {
         $this->repository = $movieRepository;
@@ -21,15 +23,13 @@ class MovieController extends Controller
     public function index()
     {
         $movies = $this->repository->findAll();
-        $genres = Movie::select('genre')->distinct()->orderBy('genre')->get(); // <-- Adicionar
-        return view('main', ['movies' => $movies, 'genres' => $genres]); // <-- Modificar
+        return view('main', ['movies' => $movies, 'genres' => $this->genres]);
     }
 
 
     public function create()
     {
-        $genres = Movie::select('genre')->distinct()->orderBy('genre')->get(); // <-- Adicionar
-        return view('add_movie', ['genres' => $genres]); // <-- Modificar
+        return view('add_movie', ['genres' => $this->genres]);
     }
 
     public function store(StoreMovieRequest $request)
@@ -63,8 +63,7 @@ class MovieController extends Controller
         if (!$movie) {
             return redirect()->route('main')->with('error', 'Filme não encontrado!');
         }
-        $genres = Movie::select('genre')->distinct()->orderBy('genre')->get(); // <-- Adicionar
-        return view('edit_movie', ['movie' => $movie, 'genres' => $genres]); // <-- Modificar
+        return view('edit_movie', ['movie' => $movie, 'genres' => $this->genres]);
     }
 
     public function update(UpdateMovieRequest $request, string $imdb)
@@ -85,11 +84,10 @@ class MovieController extends Controller
     public function filter(Request $request)
     {
         $movies = $this->repository->filter($request->all());
-        $genres = Movie::select('genre')->distinct()->orderBy('genre')->get(); 
         return view('main', [
             'movies' => $movies,
             'filters' => $request->all(),
-            'genres' => $genres 
+            'genres' => $this->genres
         ]);
     }
 }
