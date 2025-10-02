@@ -98,9 +98,7 @@
                 <div>
                     <label for="movie-year" class="block text-sm font-medium text-gray-400">Ano do Filme (mínimo
                         1900)</label>
-                    <input type="number" id="movie-year" name="releaseYear"
-                        class="mt-1 block w-full px-4 py-2 bg-gray-800 border-2 border-transparent rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value="{{ old('releaseYear') }}" required min="1900">
+                    <input type="number" id="movie-year" name="releaseYear" value="{{ old('releaseYear', $movie->releaseYear ?? '') }}" class="mt-1 block w-full px-4 py-2 bg-gray-800 rounded-lg text-white" required min="1900" max="2026">
                     @error('releaseYear')
                         <p class="validation-error">{{ $message }}</p>
                     @enderror

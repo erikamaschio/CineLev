@@ -65,18 +65,12 @@
         </div>
     </form>
 
-    {{-- Mostra os filtros que estão sendo aplicados --}}
-    @isset($filters)
+    {{-- Mostra o filtro de busca que está sendo aplicado (PARTE CORRIGIDA) --}}
+    @if(isset($filters) && !empty($filters['search']))
         <div class="mb-4 text-gray-400">
-            Filtrando por gênero: <span class="font-bold text-white">{{ $filters['genre'] }}</span>
-            @if (!empty($filters['director']))
-                | Diretor: <span class="font-bold text-white">{{ $filters['director'] }}</span>
-            @endif
-            @if (!empty($filters['releaseYear']))
-                | Ano: <span class="font-bold text-white">{{ $filters['releaseYear'] }}</span>
-            @endif
+            Exibindo resultados para a busca: <span class="font-bold text-white">{{ $filters['search'] }}</span>
         </div>
-    @endisset
+    @endif
 
     <div id="movie-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 

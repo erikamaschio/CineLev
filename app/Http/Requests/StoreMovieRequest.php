@@ -18,7 +18,7 @@ class StoreMovieRequest extends FormRequest
             'description' => 'required|string|min:10|max:300',
             'director' => 'required|string|min:5|max:100',
             'genre' => 'required|string|min:4|max:50',
-            'releaseYear' => 'required|integer|gte:1900',
+            'releaseYear' => 'required|integer|between:1900,2026',
             'duration' => 'required|integer|gte:60',
             'note' => 'required|numeric|between:0,10',
             'image' => 'nullable|url',
