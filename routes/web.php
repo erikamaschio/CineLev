@@ -27,3 +27,5 @@ Route::put('/movies/{imdb}', [MovieController::class, 'update'])->name('movies.u
 Route::delete('/movies/{imdb}', [MovieController::class, 'destroy'])->name('movies.destroy');
 
 Route::get('/movies/filter', [MovieController::class, 'filter'])->name('movies.filter');
+
+Route::get('/movies/{imdb}', [MovieController::class, 'show'])->name('movies.show');

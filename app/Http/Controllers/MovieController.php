@@ -53,8 +53,14 @@ class MovieController extends Controller
     public function show(string $imdb)
     {
         $movie = $this->repository->findByID($imdb);
-        // Retornaria a view com os detalhes de um filme
-        // return view('movies.show', ['movie' => $movie]);
+
+        // Se o filme não existir, redireciona de volta.
+        if (!$movie) {
+            return redirect()->route('main')->with('error', 'Filme não encontrado!');
+        }
+
+        // Retorna a view com os detalhes de um filme
+        return view('show_movie', ['movie' => $movie]);
     }
 
     public function edit(string $imdb)
