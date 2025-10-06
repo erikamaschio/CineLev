@@ -66,7 +66,7 @@
         </div>
     </form>
 
-    {{-- Mostra o filtro de busca que está sendo aplicado (PARTE CORRIGIDA) --}}
+    {{-- Mostra o filtro de busca que está sendo aplicado --}}
     @if (isset($filters) && !empty($filters['search']))
         <div class="mb-4 text-gray-400">
             Exibindo resultados para a busca: <span class="font-bold text-white">{{ $filters['search'] }}</span>
@@ -75,7 +75,7 @@
 
     <div id="movie-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
-        {{-- Verifique se existem filmes para exibir --}}
+        {{-- Verifica se existe filmes para exibir --}}
         @if ($movies->count() > 0)
 
             {{-- Loop para percorrer cada filme vindo do controller --}}

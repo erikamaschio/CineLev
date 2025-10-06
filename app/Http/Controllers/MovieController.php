@@ -37,7 +37,7 @@ class MovieController extends Controller
         // Pega os dados validados do formulário
         $validatedData = $request->validated();
 
-        // Pegao valor da chave 'imdb' (minúscula) que veio da validação.
+        // Pega valor da chave 'imdb' que veio da validação.
         $validatedData['IMDB'] = $validatedData['imdb'];
 
         // Remove a chave antiga em minúsculas para evitar qualquer confusão
