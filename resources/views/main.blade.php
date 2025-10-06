@@ -61,7 +61,7 @@
                 @endforeach
             @endif
             <a href="{{ route('main') }}"
-                class="px-4 py-2 rounded-full text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600">Limpar</a>
+                class="px-4 py-2 rounded-full text-sm font-medium bg-purple-600 text-gray-300 hover:bg-purple-600">Limpar</a>
         </div>
     </form>
 

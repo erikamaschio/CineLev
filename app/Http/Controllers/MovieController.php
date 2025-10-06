@@ -13,7 +13,7 @@ class MovieController extends Controller
 {
     protected $repository;
 
-    private $genres = ['Ação', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Fantasia', 'Suspense'];
+    private $genres = ['Ação', 'Comédia', 'Drama', 'Suspense', 'Ficção Científica', 'Terror', 'Romance', 'Fantasia', 'Animação'];
 
     public function __construct(MovieRepository $movieRepository)
     {

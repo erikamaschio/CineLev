@@ -94,9 +94,7 @@
                 <div>
                     <label for="movie-duration" class="block text-sm font-medium text-gray-400">Duração
                         (minutos)</label>
-                    <input type="number" id="movie-duration" name="duration"
-                        value="{{ old('duration', $movie->duration) }}"
-                        class="mt-1 block w-full px-4 py-2 bg-gray-800 rounded-lg text-white" required>
+                   <input type="number" id="movie-duration" name="duration" value="{{ old('duration', $movie->duration ?? '') }}" class="mt-1 block w-full px-4 py-2 bg-gray-800 rounded-lg text-white" required min="60" max="400">
                     @error('duration')
                         <p class="validation-error">{{ $message }}</p>
                     @enderror
