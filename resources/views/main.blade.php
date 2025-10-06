@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineLev - Filmes</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -66,7 +67,7 @@
     </form>
 
     {{-- Mostra o filtro de busca que está sendo aplicado (PARTE CORRIGIDA) --}}
-    @if(isset($filters) && !empty($filters['search']))
+    @if (isset($filters) && !empty($filters['search']))
         <div class="mb-4 text-gray-400">
             Exibindo resultados para a busca: <span class="font-bold text-white">{{ $filters['search'] }}</span>
         </div>
@@ -82,7 +83,7 @@
                 <div
                     class="bg-gray-900 rounded-xl shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 relative group">
                     <img src="{{ $movie->image ?? 'https://via.placeholder.com/310x420.png?text=Imagem+Nao+Disponivel' }}"
-                        alt="Capa do filme {{ $movie->title }}" class="w-full h-80 object-cover rounded-t-xl">
+                        alt="Capa do filme {{ $movie->title }}" class="w-full h-96 object-cover rounded-t-xl">
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-2">
                             <h3 class="text-xl font-bold text-white">{{ $movie->title }}</h3>
