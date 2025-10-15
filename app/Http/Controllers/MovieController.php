@@ -34,19 +34,14 @@ class MovieController extends Controller
 
     public function store(StoreMovieRequest $request)
     {
-        // Pega os dados validados do formulário
         $validatedData = $request->validated();
 
-        // Pega valor da chave 'imdb' que veio da validação.
         $validatedData['IMDB'] = $validatedData['imdb'];
 
-        // Remove a chave antiga em minúsculas para evitar qualquer confusão
         unset($validatedData['imdb']);
 
-        // Envia os dados com a chave correta para o repositório
         $this->repository->register($validatedData);
 
-        // Redireciona para a lista de filmes com uma mensagem de sucesso
         return redirect()->route('main')->with('success', 'Filme criado com sucesso!');
     }
 
@@ -54,12 +49,10 @@ class MovieController extends Controller
     {
         $movie = $this->repository->findByID($imdb);
 
-        // Se o filme não existir, redireciona de volta.
         if (!$movie) {
             return redirect()->route('main')->with('error', 'Filme não encontrado!');
         }
 
-        // Retorna a view com os detalhes de um filme
         return view('show_movie', ['movie' => $movie]);
     }
 
@@ -75,14 +68,12 @@ class MovieController extends Controller
     public function update(UpdateMovieRequest $request, string $imdb)
     {
         $this->repository->update($imdb, $request->validated());
-        // Redireciona para a lista de filmes com uma mensagem de sucesso
         return redirect()->route('main')->with('success', 'Filme atualizado com sucesso!');
     }
 
     public function destroy(string $imdb)
     {
         $this->repository->delete($imdb);
-        // Redireciona para a lista de filmes com uma mensagem de sucesso
         return redirect()->route('main')->with('success', 'Filme excluído com sucesso!');
     }
 

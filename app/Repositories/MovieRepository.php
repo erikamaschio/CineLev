@@ -50,12 +50,9 @@ class MovieRepository
         $query = $this->model->query();
         $searchTerm = $data['search'] ?? '';
 
-        // Se o termo de busca não estiver vazio
         if ($searchTerm) {
-            // Quebra a busca em palavras individuais
             $keywords = explode(' ', $searchTerm);
 
-            // Adiciona uma condição para CADA palavra-chave
             foreach ($keywords as $keyword) {
                 $query->where(function ($subQuery) use ($keyword) {
                     $subQuery->where('title', 'like', '%' . $keyword . '%')

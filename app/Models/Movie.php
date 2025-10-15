@@ -21,12 +21,9 @@ class Movie extends Model
         'image',
     ];
 
-    // Configura a chave primária do modelo.
     protected $primaryKey = 'IMDB';
 
-    // Indica se a chave primária é auto-incrementável.
     public $incrementing = false;
 
-    // O tipo de dado da chave primária.
     protected $keyType = 'string';
 }
